@@ -1,52 +1,55 @@
+import 'package:facebook_clone/config/pallete.dart';
+import 'package:facebook_clone/data/data.dart';
 import 'package:facebook_clone/data/random_color.dart';
+import 'package:facebook_clone/widgets/circle_button.dart';
+import 'package:facebook_clone/widgets/create_post.dart';
+import 'package:facebook_clone/widgets/rooms.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: CustomScrollView(
-          reverse: true,
           slivers: [
-                SliverList(
-                  delegate: SliverChildListDelegate(
-                    [
-                      Container(color: Colors.red, height: 150.0),
-                      Container(color: Colors.purple, height: 150.0),
-                      Container(color: Colors.green, height: 150.0),
-                    ],
+                SliverAppBar(
+                  centerTitle: false,
+                  floating: true,
+                  brightness:Brightness.light,
+                  backgroundColor: Colors.white,
+                  title: Text(
+                    "facebook", 
+                    style:TextStyle(
+                    color: Palette.facebookBlue,
+                    fontSize: 28.0,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: -1.2
+                  )
                   ),
+                  actions: [
+                    CirlceButton(
+                      icon: Icons.search,
+                      iconSize: 30.0
+                    ),
+                    CirlceButton(
+                      icon: MdiIcons.facebookMessenger,
+                      iconSize: 30.0
+                    )
+                  ],
                 ),
-                SliverList(
-                      delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                        // To convert this infinite list to a list with three items,
-                        // uncomment the following line:
-                        if (index > 3) return null;
-                        return Container(color: UniqueColorGenerator.getColor(), height: 150.0);
-                      },
-                      // Or, uncomment the following line:
-                      // childCount: 3,
-                    ),
+                SliverToBoxAdapter(
+                    child: CreatePost(user: currentUser),
                 ),
-                SliverGrid(
-                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 200.0,
-                      mainAxisSpacing: 10.0,
-                      crossAxisSpacing: 10.0,
-                      childAspectRatio: 4.0,
+                SliverPadding(
+                  padding: const EdgeInsets.fromLTRB(0.0,10.0,0.0,5.0),
+                  sliver: SliverToBoxAdapter(
+                    child: Rooms(
+                      onlineUsers:onlineUsers
                     ),
-                    delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                        return Container(
-                          alignment: Alignment.center,
-                          color: Colors.teal[100 * (index % 9)],
-                          child: Text('Grid Item $index'),
-                        );
-                      },
-                      childCount: 10,
-                    ),
+                  ),
                 )
-              ]
+          ]
         )
       );
   }

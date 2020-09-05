@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         scaffoldBackgroundColor: Palette.scaffoldBg
       ),
-      home: SafeArea(child: HomeScreen()),
+      home:  HomeScreen()
     );
   }
 }
